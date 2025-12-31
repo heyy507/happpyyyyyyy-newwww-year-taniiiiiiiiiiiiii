@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy New Year Tanya 🎆</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    text-align: center;
+    color: white;
+    overflow-x: hidden;
+}
+
+/* Password screen */
+#login {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+input {
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+button {
+    margin-top: 15px;
+    padding: 12px 22px;
+    border: none;
+    border-radius: 10px;
+    background: #ff2e63;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Main site */
+#site {
+    display: none;
+    padding: 30px;
+}
+
+.photos img {
+    width: 240px;
+    height: 320px;
+    object-fit: cover;
+    border-radius: 20px;
+    margin-top: 20px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+
+#surprise {
+    margin-top: 20px;
+    font-size: 18px;
+}
+
+/* Fireworks */
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+</style>
+</head>
+
+<body>
+
+<!-- PASSWORD SCREEN -->
+<div id="login">
+    <h1>🔐 Only My Love Can Enter</h1>
+    <p>Hint: tanyaforever 💍</p>
+    <input type="password" id="pass" placeholder="Enter Password">
+    <button onclick="checkPass()">Enter ❤️</button>
+</div>
+
+<!-- MAIN WEBSITE -->
+<div id="site">
+    <h1>🎆 Happy New Year Tanya 🎆</h1>
+    <p>
+        You take care of me like a baby,  
+        love me endlessly,  
+        and make my life beautiful ❤️  
+        I am so lucky to have you.
+    </p>
+
+    <!-- SLIDESHOW -->
+    <div class="photos">
+        <img id="slideshow" src="photo1.jpg">
+    </div>
+
+    <!-- SURPRISE -->
+    <button onclick="showSurprise()">🎁 Click for a Surprise</button>
+    <div id="surprise"></div>
+
+    <!-- VOICE MESSAGE -->
+    <br>
+    <button onclick="playVoice()">🎤 Play My Voice Message</button>
+
+    <audio id="voice">
+        <source src="voice.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- OPTIONAL BACKGROUND MUSIC -->
+    <audio autoplay loop>
+        <source src="bgmusic.mp3" type="audio/mpeg">
+    </audio>
+
+    <h2>💖 Our Journey</h2>
+    <p>
+        From small talks to deep love,  
+        from smiles to forever,  
+        every moment with you is my favorite.  
+        I promise to love you more every year ❤️
+    </p>
+</div>
+
+<!-- FIREWORKS -->
+<canvas id="fireworks"></canvas>
+
+<script>
+/* PASSWORD */
+function checkPass() {
+    const password = "tanyaforever";
+    if (document.getElementById("pass").value === password) {
+        document.getElementById("login").style.display = "none";
+        document.getElementById("site").style.display = "block";
+    } else {
+        alert("Wrong password 💔");
+    }
+}
+
+/* SLIDESHOW */
+const images = ["photo1.jpg", "photo2.jpg", "photo3.jpg"];
+let index = 0;
+setInterval(() => {
+    index = (index + 1) % images.length;
+    document.getElementById("slideshow").src = images[index];
+}, 2500);
+
+/* SURPRISE */
+function showSurprise() {
+    document.getElementById("surprise").innerHTML =
+        "I love you more than anything, Tanya 💕<br>Let’s make this year unforgettable ✨";
+}
+
+/* VOICE */
+function playVoice() {
+    document.getElementById("voice").play();
+}
+
+/* FIREWORKS */
+const canvas = document.getElementById("fireworks");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+let particles = [];
+
+function explode(x, y) {
+    for (let i = 0; i < 30; i++) {
+        particles.push({
+            x, y,
+            vx: Math.random()*6-3,
+            vy: Math.random()*6-3,
+            life: 50
+        });
+    }
+}
+
+function animate() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    particles.forEach((p,i)=>{
+        p.x += p.vx;
+        p.y += p.vy;
+        p.life--;
+        ctx.fillStyle="white";
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,2,0,Math.PI*2);
+        ctx.fill();
+        if(p.life<=0) particles.splice(i,1);
+    });
+    requestAnimationFrame(animate);
+}
+animate();
+
+setInterval(()=>{
+    explode(Math.random()*canvas.width, Math.random()*canvas.height/2);
+},1200);
+</script>
+
+</body>
+</html>
